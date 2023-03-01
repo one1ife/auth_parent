@@ -11,6 +11,7 @@ import com.xyxy.system.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class SysRoleController {
     //http://localhost:8800/admin/system/sysRole/remove/1
 
     //逻辑删除
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("逻辑删除接口")
     @DeleteMapping("remove/{id}")
     public Result removeRole(@PathVariable Long id){
@@ -57,6 +59,7 @@ public class SysRoleController {
 
     //3 条件分页查询
     // page当前页  limit每页记录数
+    @PreAuthorize("hasAuthority('bnt.sysRole.list')")
     @ApiOperation("条件分页查询")
     @GetMapping("{page}/{limit}")
     public Result findPageQueryRole(@PathVariable Long page,
@@ -73,6 +76,7 @@ public class SysRoleController {
     //添加
     // @RequestBody 不能使用get提交方式
     // 传递json格式数据，把json格式数据分封装到对象里面
+    @PreAuthorize("hasAuthority('bnt.sysRole.add')")
     @ApiOperation("添加角色")
     @PostMapping("save")
     public Result saveRole(@RequestBody SysRole sysRole){
@@ -90,6 +94,7 @@ public class SysRoleController {
     }
 
     //修改-最终修改
+    @PreAuthorize("hasAuthority('bnt.sysRole.update')")
     @ApiOperation("最终修改")
     @PostMapping("update")
     public Result updateRole(@RequestBody SysRole sysRole){
@@ -101,6 +106,7 @@ public class SysRoleController {
     //批量删除
     // 多个id [1,2,3]
     //json 数组格式 --- java LIST集合
+    @PreAuthorize("hasAuthority('bnt.sysRole.remove')")
     @ApiOperation("批量删除")
     @DeleteMapping("batchRemove")
     public Result batchRemove(@RequestBody List<Long> ids){
